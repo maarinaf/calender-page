@@ -1,0 +1,484 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(
+        135deg,
+        #f8e1e8 0%,    /* Rosa pastel */
+        #e7f0f8 50%,   /* Azul pastel */
+        #e8f6f0 100%   /* Verde pastel */
+    );
+    background-attachment: fixed;
+    color: #7c6b9d;    /* Roxo pastel escuro para texto */
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 16px;
+    box-shadow: 
+        0 8px 32px rgba(183, 157, 185, 0.15),
+        0 1px 2px rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Header Styles */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(183, 157, 185, 0.2);
+    position: relative;
+}
+
+.app-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(183, 157, 185, 0.3) 50%,
+        transparent 100%
+    );
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navigation-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn, .today-btn {
+    padding: 8px 16px;
+    border: 1px solid #e2d8e4;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    cursor: pointer;
+    color: #9b6b9d;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover, .today-btn:hover {
+    background: linear-gradient(135deg, #ffd5e5 0%, #ffe3e3 100%);
+    transform: translateY(-1px);
+}
+
+.today-btn {
+    color: #333;
+    font-weight: 500;
+}
+
+.view-options {
+    display: flex;
+    gap: 2px;
+    background: rgba(237, 242, 247, 0.7);
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.view-btn {
+    padding: 8px 16px;
+    border: none;
+    background: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #9b6b9d;
+    transition: all 0.3s ease;
+}
+
+.view-btn.active {
+    background: #ffeef3;
+    color: #7c6b9d;
+    box-shadow: 0 2px 4px rgba(183, 157, 185, 0.15);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    padding: 8px 16px;
+    padding-left: 35px;
+    border: 1px solid #e2d8e4;
+    border-radius: 6px;
+    width: 200px;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    color: #7c6b9d;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9b6b9d;
+}
+
+.share-btn {
+    padding: 8px 16px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Calendar Grid */
+.calendar-grid {
+    display: flex;
+    margin-top: 20px;
+    border: 1px solid rgba(183, 157, 185, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.time-column {
+    width: 80px;
+    border-right: 1px solid rgba(183, 157, 185, 0.2);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.time-slot {
+    height: 60px;
+    padding: 10px;
+    color: #9b6b9d;
+    font-size: 0.9em;
+    border-bottom: 1px dashed rgba(183, 157, 185, 0.1);
+}
+
+.days-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day-column {
+    border-right: 1px solid rgba(183, 157, 185, 0.2);
+}
+
+.day-column:last-child {
+    border-right: none;
+}
+
+.day-header {
+    padding: 15px 10px;
+    text-align: center;
+    background: linear-gradient(135deg, #f8e1e8 0%, #f3e7f7 100%);
+    border-bottom: 1px solid rgba(183, 157, 185, 0.2);
+    transition: all 0.3s ease;
+}
+
+.day-name {
+    font-size: 0.9em;
+    color: #9b6b9d;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.day-number {
+    font-size: 1.2em;
+    color: #7c6b9d;
+    font-weight: 500;
+}
+
+/* Diferentes tons pastéis para cada dia da semana */
+.day-column:nth-child(1) .day-header {
+    background: linear-gradient(135deg, #ffe5e5 0%, #fff0f0 100%); /* Domingo - Rosa suave */
+}
+
+.day-column:nth-child(2) .day-header {
+    background: linear-gradient(135deg, #e5f0ff 0%, #f0f5ff 100%); /* Segunda - Azul suave */
+}
+
+.day-column:nth-child(3) .day-header {
+    background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f2 100%); /* Terça - Verde suave */
+}
+
+.day-column:nth-child(4) .day-header {
+    background: linear-gradient(135deg, #fff3e0 0%, #fff8e8 100%); /* Quarta - Laranja suave */
+}
+
+.day-column:nth-child(5) .day-header {
+    background: linear-gradient(135deg, #e3f2fd 0%, #eef6ff 100%); /* Quinta - Azul claro */
+}
+
+.day-column:nth-child(6) .day-header {
+    background: linear-gradient(135deg, #f3e5f5 0%, #f8f0fa 100%); /* Sexta - Roxo suave */
+}
+
+.day-column:nth-child(7) .day-header {
+    background: linear-gradient(135deg, #e0f7fa 0%, #f0fbfc 100%); /* Sábado - Turquesa suave */
+}
+
+/* Estilo especial para o dia atual */
+.day-header.today {
+    background: linear-gradient(135deg, #ffd5e5 0%, #ffe3e3 100%);
+    border-bottom: 2px solid #9b6b9d;
+}
+
+.day-header.today .day-name {
+    color: #8b5b8d;
+}
+
+.day-header.today .day-number {
+    color: #6b4b7d;
+    font-weight: 600;
+}
+
+/* Efeito hover suave */
+.day-header:hover {
+    filter: brightness(1.02);
+}
+
+.time-slots {
+    position: relative;
+}
+
+.event {
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.event.blue {
+    background: linear-gradient(135deg, #e5f3ff 0%, #f0f7ff 100%);
+    border-left: 4px solid #b5d3ff;
+    color: #6b8bc4;
+}
+
+.event.green {
+    background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f2 100%);
+    border-left: 4px solid #b5e5c0;
+    color: #6baa7c;
+}
+
+.event.orange {
+    background: linear-gradient(135deg, #fff3e0 0%, #fff8e8 100%);
+    border-left: 4px solid #ffd5b5;
+    color: #c48b6b;
+}
+
+/* Mini Calendar */
+.mini-calendar {
+    position: absolute;
+    right: 20px;
+    top: 100px;
+    width: 250px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(183, 157, 185, 0.2);
+    box-shadow: 
+        0 8px 32px rgba(183, 157, 185, 0.15),
+        0 1px 2px rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.mini-calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.weekdays-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    color: #9b6b9d;
+    font-size: 0.9em;
+    margin-bottom: 8px;
+}
+
+.mini-calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.mini-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #9b6b9d;
+}
+
+.mini-day.today {
+    background: linear-gradient(135deg, #ffd5e5 0%, #ffe3e3 100%);
+    color: #7c6b9d;
+    font-weight: bold;
+}
+
+.mini-day:hover {
+    background: #ffeef3;
+}
+
+/* Upcoming Events */
+.upcoming-events {
+    position: absolute;
+    right: 20px;
+    top: 400px;
+    width: 250px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(183, 157, 185, 0.2);
+    box-shadow: 
+        0 8px 32px rgba(183, 157, 185, 0.15),
+        0 1px 2px rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.event-list {
+    margin-top: 16px;
+}
+
+.upcoming-event {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(183, 157, 185, 0.1);
+    transition: all 0.3s ease;
+}
+
+.upcoming-event:hover {
+    background: #ffeef3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(183, 157, 185, 0.2);
+}
+
+.event-time {
+    font-size: 0.9em;
+    color: #9b6b9d;
+    margin-bottom: 4px;
+}
+
+.event-title {
+    font-weight: 500;
+    color: #9b6b9d;
+}
+
+@media (max-width: 1200px) {
+    .mini-calendar,
+    .upcoming-events {
+        display: none;
+    }
+}
+
+/* Adicionar animação de loading para os eventos */
+@keyframes eventFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.event {
+    animation: eventFadeIn 0.5s ease forwards;
+}
+
+/* Adicionar efeito hover nos botões */
+.nav-btn:hover,
+.today-btn:hover,
+.view-btn:hover,
+.share-btn:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
+    transform: translateY(-1px);
+    transition: all 0.3s ease;
+}
+
+/* Estilizar o mini calendário */
+.mini-day.today {
+    background: linear-gradient(135deg, #ffd5e5 0%, #ffe3e3 100%);
+    color: #7c6b9d;
+    font-weight: bold;
+}
+
+/* Adicionar animação suave aos eventos */
+.event:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(183, 157, 185, 0.2);
+}
+
+/* Estilizar a barra de pesquisa */
+.search-box input:focus {
+    background: white;
+    box-shadow: 0 4px 12px rgba(183, 157, 185, 0.15);
+    outline: none;
+    border-color: #b5a3b7;
+}
+
+/* Atualizar cores dos títulos */
+h1, h2, h3 {
+    background: linear-gradient(135deg, #ffd5e5 0%, #ffe3e3 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 600;
+}
+
+#currentMonth {
+    color: #9b6b9d;
+}
+
+.upcoming-events h3 {
+    background: linear-gradient(135deg, #b5c9e5 0%, #d5e3f5 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 15px;
+}
+
+.mini-calendar-header span {
+    color: #9b6b9d;
+    font-weight: 500;
+}
+
+/* Atualizar cor do título do evento */
+.event-title {
+    font-weight: 500;
+    color: #9b6b9d;
+}
+
+/* Atualizar cor do texto dos eventos próximos */
+.upcoming-event .event-title {
+    color: #8e9aaf;
+    font-weight: 500;
+}

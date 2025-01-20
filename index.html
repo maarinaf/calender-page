@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário de Tarefas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <div class="header-left">
+                <div class="month-year-selector">
+                    <select id="monthSelect" class="month-select">
+                        <!-- Meses serão gerados via JavaScript -->
+                    </select>
+                    <span class="year">2025</span>
+                </div>
+                <div class="navigation-buttons">
+                    <button class="nav-btn">&#8249;</button>
+                    <button class="today-btn">Hoje</button>
+                    <button class="nav-btn">&#8250;</button>
+                </div>
+            </div>
+            <div class="view-options">
+                <button class="view-btn active">Dia</button>
+                <button class="view-btn">Semana</button>
+                <button class="view-btn">Mês</button>
+                <button class="view-btn">Ano</button>
+            </div>
+            <div class="header-right">
+                <div class="search-box">
+                    <input type="text" placeholder="Pesquisar">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <button class="share-btn">Compartilhar</button>
+            </div>
+        </header>
+
+        <div class="calendar-grid">
+            <div class="time-column">
+                <div class="time-slot">6:00</div>
+                <div class="time-slot">7:00</div>
+                <div class="time-slot">8:00</div>
+                <div class="time-slot">9:00</div>
+                <div class="time-slot">10:00</div>
+                <div class="time-slot">11:00</div>
+                <div class="time-slot">12:00</div>
+                <div class="time-slot">13:00</div>
+                <div class="time-slot">14:00</div>
+            </div>
+
+            <div class="days-grid" id="daysGrid">
+                <!-- Dias serão gerados via JavaScript -->
+            </div>
+        </div>
+
+        <div class="mini-calendar">
+            <div class="mini-calendar-header">
+                <span>Janeiro 2025</span>
+                <div class="mini-nav-buttons">
+                    <button>&#8249;</button>
+                    <button>&#8250;</button>
+                </div>
+            </div>
+            <div class="weekdays-header">
+                <span>D</span><span>S</span><span>T</span><span>Q</span>
+                <span>Q</span><span>S</span><span>S</span>
+            </div>
+            <div class="mini-calendar-days" id="miniCalendarDays">
+                <!-- Mini calendário será gerado via JavaScript -->
+            </div>
+        </div>
+
+        <div class="upcoming-events">
+            <h3>Próximos Eventos</h3>
+            <div class="event-list" id="upcomingEventsList">
+                <!-- Eventos serão gerados via JavaScript -->
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
